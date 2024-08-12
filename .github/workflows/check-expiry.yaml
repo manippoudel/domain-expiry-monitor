@@ -1,0 +1,27 @@
+name: Domain Expiry Check with Slack Notifications
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at midnight UTC
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  check_domains:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Run Domain Expiry Check
+      uses: manippoudel/domain-expiry-monitor@main
+      with:
+        domains: ${{ secrets.DOMAINS }}  # Use a secret to store your domain names
+        slack_webhook: ${{ secrets.SLACK_WEBHOOK }}  # Use a secret to store your Slack Webhook URL
+
+        
