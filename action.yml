@@ -1,0 +1,22 @@
+name: "Domain Expiry Checker with Slack Notifications"
+description: "Checks the expiry date of domains and sends Slack notifications if they are expiring within the next 30 days."
+author: "Manip Poudel"
+
+inputs:
+  domains:
+    description: "Comma-separated list of domains to check"
+    required: true
+  slack_webhook:
+    description: "Slack Webhook URL for sending notifications"
+    required: true
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.domains }}
+    - ${{ inputs.slack_webhook_url }}
+
+branding:
+  icon: "check-circle"
+  color: "blue"
